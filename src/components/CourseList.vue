@@ -4,16 +4,22 @@
       v-for="course in courses"
       :key="course.id"
       :course="course"
-      @id="() => emits('id', course.id)"
+      @id="handleId"
     ></CourseItem>
   </div>
 </template>
 
 <script setup>
-import CourseItem from "./CourseItem.vue";
-import courses from "../assets/data";
+import CourseItem from './CourseItem.vue';
+import courses from '../assets/data';
+import { ref } from 'vue';
 
-const emits = defineEmits(["id"]);
+const emits = defineEmits(['id']);
+
+const handleId = (id) => {
+  console.log('CourseList received id:', id);
+  emits('id', id);
+};
 </script>
 
 <style scoped>

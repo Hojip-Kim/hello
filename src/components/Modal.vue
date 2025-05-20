@@ -1,27 +1,52 @@
 <template>
-  <div class="modal-container" v-if="props.isOpen" @click="closeModal">
-    <div class="modal-box" @click.stop>
-      <div class="modal-close-container">
-        <span class="modal-close" @click="closeModal">X</span>
-      </div>
-      <div class="modal-header">
-        <div class="modal-header-name">
-          <span>이름</span>
-          <span>{{ props.content.name }}</span>
+  <transition name="modal-fade">
+    <div class="modal-container" v-if="props.isOpen" @click="closeModal">
+      <div class="modal-box" @click.stop>
+        <div class="modal-close-container">
+          <div class="modal-close" @click="closeModal">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18 6L6 18"
+                stroke="#333333"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6 6L18 18"
+                stroke="#333333"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
         </div>
-        <div class="modal-header-region">
-          <span>지역</span>
-          <span>{{ props.content.region }}</span>
+        <div class="modal-header">
+          <div class="modal-header-name">
+            <span class="label">이름</span>
+            <span class="value">{{ props.content.name }}</span>
+          </div>
+          <div class="modal-header-region">
+            <span class="label">지역</span>
+            <span class="value">{{ props.content.region }}</span>
+          </div>
         </div>
-      </div>
-      <div class="modal-content">
-        <div class="modal-content-temperature">
-          <span>온도</span>
-          <span>{{ props.content.temperature }}℃</span>
+        <div class="modal-content">
+          <div class="modal-content-temperature">
+            <span class="label">온도</span>
+            <span class="value">{{ props.content.temperature }}℃</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <style scoped>
@@ -32,134 +57,133 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-
   z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.modal-box {
-  width: 700px;
-  height: 300px;
-  background-color: white;
-  border-radius: 10px;
-  padding: 10px;
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
 
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.modal-box {
+  width: 90%;
+  max-width: 420px;
+  background-color: white;
+  border-radius: 24px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: modal-appear 0.3s ease-out forwards;
+}
 
-  opacity: 1;
+@keyframes modal-appear {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-close-container {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  margin-bottom: 12px;
 }
 
 .modal-close {
-  top: 10px;
-  right: 10px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #000;
-  font-family: 'Pretendard', sans-serif;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-close:hover {
+  background-color: #f2f4f6;
 }
 
 .modal-header {
   width: 100%;
-  height: 20%;
-
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 0px 0px 20px 0px;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-.modal-header-name {
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-right: 1px solid gray;
-}
-
-.modal-header-name span:first-child {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #000;
-  font-family: 'Pretendard', sans-serif;
-}
-
+.modal-header-name,
 .modal-header-region {
-  width: 100%;
-  height: 100%;
-
+  flex: 1;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.modal-header-region span:first-child {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #000;
-  font-family: 'Pretendard', sans-serif;
+.modal-header-name:hover,
+.modal-header-region:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.modal-header span {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #000;
-  font-family: 'Pretendard', sans-serif;
+.label {
+  font-size: 14px;
+  color: #8b95a1;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
 }
 
 .modal-content {
   width: 100%;
-  height: 80%;
-  border: 1px solid gray;
-  border-radius: 10px;
-  box-shadow: inset 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  background-color: #f9fafb;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.modal-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .modal-content-temperature {
   width: 100%;
-  height: 100%;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
-.modal-content-temperature span:first-child {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #000;
-  font-family: 'Pretendard', sans-serif;
-}
-
-.modal-content-temperature span:last-child {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #000;
-  font-family: 'Pretendard', sans-serif;
+.modal-content-temperature .value {
+  font-size: 32px;
+  margin-top: 12px;
+  color: #3182f6;
 }
 </style>
+
 <script setup>
 import { defineProps, defineEmits } from 'vue';
 
@@ -169,18 +193,8 @@ const props = defineProps({
     default: false,
   },
   content: {
-    name: {
-      type: String,
-      default: '',
-    },
-    temperature: {
-      type: Number,
-      default: 0,
-    },
-    region: {
-      type: String,
-      default: '',
-    },
+    type: Object,
+    default: () => ({}),
   },
 });
 

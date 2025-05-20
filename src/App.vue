@@ -3,13 +3,16 @@ import BaseButton from './components/BaseButton.vue';
 import LeftSide from './components/CourseList.vue';
 import Modal from './components/Modal.vue';
 import RightSide from './components/right.vue';
-import { hardcodedData } from './hardcoding';
 
 import { ref, watch } from 'vue';
 
 const isModalOpen = ref(false);
 
-const id = ref(1);
+const getId = (id) => {
+  setId.value = id;
+};
+
+const setId = ref(0);
 
 const tmpData = ref({
   name: '남호고택에서의 하룻밤',
@@ -17,8 +20,9 @@ const tmpData = ref({
   temperature: 20,
 });
 
-const openModal = () => {
+const openModal = (item) => {
   isModalOpen.value = true;
+  tmpData.value = item;
 };
 
 const closeModal = () => {
@@ -27,10 +31,10 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div @click="openModal">hello</div>
+  <div @click="openModal"></div>
   <div class="container">
-    <LeftSide :hardcoded-data="hardcodedData" @id="id" />
-    <RightSide :id="id" />
+    <LeftSide @id="getId" />
+    <RightSide :id="setId" @item="(item) => openModal(item)" />
 
     <Modal
       :is-open="isModalOpen"
@@ -43,7 +47,7 @@ const closeModal = () => {
 <style scoped>
 .container {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
