@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="left-container">
     <CourseItem
       v-for="course in courses"
       :key="course.id"
@@ -23,7 +23,20 @@ const handleId = (id) => {
 </script>
 
 <style scoped>
-div {
-  @apply max-w-md mt-10 space-y-4;
+.left-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  height: 30%;
+  overflow-y: scroll;
+  padding-top: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+
+  margin: 20px 50px 50px 50px;
 }
 </style>

@@ -158,9 +158,9 @@
             <div class="info-card-content">
               <div class="weather-grid">
                 <div class="weather-item">
-                  <span class="weather-label">최고 기온</span>
+                  <span class="weather-label">습도</span>
                   <span class="weather-value temperature"
-                    >{{ props.content.tmx || '-' }}℃</span
+                    >{{ props.content.rhm || '-' }}%</span
                   >
                 </div>
                 <div class="weather-item">
@@ -223,7 +223,7 @@
             <div class="info-card-content">
               <div class="info-row">
                 <span class="info-label">풍향</span>
-                <span class="info-value">{{ props.content.wd || '-' }}</span>
+                <span class="info-value">{{ wd || '-' }}</span>
               </div>
               <div class="info-row">
                 <span class="info-label">풍속</span>
@@ -427,6 +427,28 @@ const props = defineProps({
     default: () => ({}),
   },
 });
+
+let wd;
+
+if (props.content.wd == 0) {
+  wd = '북풍';
+} else if (props.content.wd > 0 && props.content.wd < 90) {
+  wd = '북동풍';
+} else if (props.content.wd == 90) {
+  wd = '동풍';
+} else if (props.content.wd > 90 && props.content.wd < 180) {
+  wd = '남동풍';
+} else if (props.content.wd == 180) {
+  wd = '남풍';
+} else if (props.content.wd > 180 && props.content.wd < 270) {
+  wd = '남서풍';
+} else if (props.content.wd == 270) {
+  wd = '서풍';
+} else if (props.content.wd > 270 && props.content.wd < 360) {
+  wd = '북서풍';
+} else {
+  wd = '-';
+}
 
 const emit = defineEmits(['closeModal']);
 

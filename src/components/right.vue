@@ -35,7 +35,6 @@ const items = ref([]);
 watch(
   () => props.id,
   async (newVal) => {
-    console.log(newVal);
     try {
       const res = await axios.get(
         'https://apis.data.go.kr/1360000/TourStnInfoService1/getTourStnVilageFcst1',
@@ -65,3 +64,10 @@ watch(
   }
 );
 </script>
+
+<style scoped>
+.right-container {
+  height: 70%;
+  overflow-y: scroll;
+  margin: 0 50px 0 50px;}
+</style>

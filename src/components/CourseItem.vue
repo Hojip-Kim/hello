@@ -3,7 +3,6 @@
     <div class="course-id">{{ course.id }}</div>
     <div class="course-content">
       <h3 class="course-name">{{ course.name }}</h3>
-      <div class="course-badge">관광 코스</div>
     </div>
     <div class="course-arrow">
       <svg
@@ -36,19 +35,19 @@ const emits = defineEmits(['id']);
 .course-item {
   display: flex;
   align-items: center;
+  flex-direction: column;
   padding: 16px;
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+  width: 30%;
 }
 
 .course-item::after {
   content: '';
-  position: absolute;
+
   inset: 0;
   border-radius: 16px;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
